@@ -44,9 +44,9 @@ write.csv(perf, file =paste0(name, "/", name,"_performance.csv"))
 EuroTF_recon <- predict(EuroTF_model.cv, test_data, sse=TRUE, nboot=1000)
 
 #Create data
-recon <- data.frame(EuroTF_recon$fit.boot)
-error <- EuroTF_recon$SEP.boot
-z <- standardize(recon)
+recon <<- data.frame(EuroTF_recon$fit.boot)
+error <<- EuroTF_recon$SEP.boot
+zscores <<- standardize(recon)
 
 write.csv(recon, file = paste0(name,"/",name, "_reconstruction.csv"))
 
