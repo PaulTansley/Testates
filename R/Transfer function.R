@@ -36,10 +36,10 @@ EuroTF_model.cv <- crossval(EuroTF_model, cv.method="loo")
 #Check performance
 print(performance(EuroTF_model.cv))
 
-perf <- as.data.frame(do.call(rbind,performance(EuroTF_model.cv)))
-perf <- perf[-1,]
+model_stats <<- as.data.frame(do.call(rbind,performance(EuroTF_model.cv)))
 
-write.csv(perf, file =paste0(name, "/", name,"_performance.csv"))
+
+if(save == T){write.csv(model_stats, file =paste0(name, "/", name,"_performance.csv"))}
 
 #Run model on data
 EuroTF_recon <- predict(EuroTF_model.cv, test_data, sse=TRUE, nboot=1000)
