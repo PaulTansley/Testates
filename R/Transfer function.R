@@ -1,12 +1,11 @@
 
-test_trans <- function(test_data,
+trans_fun <- function(test_data,
                        region_name = F){
 require(rioja)
 require(tidyverse)
 require(ggpubr)
 require(vegan)
 require(effectsize)
-require(vroom)
 mydir <- paste0(test_data, "/")
 if(!dir.exists(mydir)) dir.create(mydir)
 name <- test_data
