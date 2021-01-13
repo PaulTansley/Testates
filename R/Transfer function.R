@@ -1,6 +1,7 @@
 
 trans_fun <- function(test_data,
-                       region_name = F){
+                       region_name = F,
+                      save = T){
 require(rioja)
 require(tidyverse)
 require(ggpubr)
@@ -48,10 +49,10 @@ recon <<- data.frame(EuroTF_recon$fit.boot)
 error <<- EuroTF_recon$SEP.boot
 zscores <<- standardize(recon)
 
-write.csv(recon, file = paste0(name,"/",name, "_reconstruction.csv"))
+if(save == T){write.csv(recon, file = paste0(name,"/",name, "_reconstruction.csv"))}
 
-write.csv(error, file = paste0(name,"/",name, "_error.csv"))
+if(save == T){write.csv(error, file = paste0(name,"/",name, "_error.csv"))}
 
-write.csv(z, file = paste0(name,"/",name, "_z_scores.csv"))
+if(save == T){write.csv(zscores, file = paste0(name,"/",name, "_z_scores.csv"))}
 }
 
