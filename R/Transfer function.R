@@ -10,7 +10,7 @@ mydir <- paste0(test_data, "/")
 if(!dir.exists(mydir)) dir.create(mydir)
 name <- test_data
 test_data <- read.csv(paste0(test_data, ".csv"))
-EuroTF <- data(eurowood)
+EuroTF <- data("eurowood")
 region_name <- region_name
 
 
