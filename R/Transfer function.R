@@ -40,9 +40,11 @@ trans_fun <- function(testate_data = "sq_tests",
     depth <- testate_data$depth
   }
   else{
-    depth <- seq(from = depth_start,
-        by = depth_int,
-        length.out = nrow(testate_data))
+    depth <- seq(
+      from = depth_start,
+      by = depth_int,
+      length.out = nrow(testate_data)
+    )
   }
 
   csv <- paste0(mydir, "/", name, "_", tf, "_", country)
@@ -195,16 +197,20 @@ trans_fun <- function(testate_data = "sq_tests",
 
     write.csv(zscores, file = paste0(csv, "_z_scores.csv"))
 
-    ggsave(filename = paste0(csv, "_z_plot.png"), plot = z_plot,
-           units = "cm", height = 20, width = 20)
+    ggsave(
+      filename = paste0(csv, "_z_plot.png"),
+      plot = z_plot,
+      units = "cm",
+      height = 20,
+      width = 20
+    )
 
-    ggsave(filename = paste0(csv, "_recon_plot.png"), plot = recon_plot,
-           units = "cm", height = 20, width = 20)
+    ggsave(
+      filename = paste0(csv, "_recon_plot.png"),
+      plot = recon_plot,
+      units = "cm",
+      height = 20,
+      width = 20
+    )
   }
 }
-
-
-
-
-
-
