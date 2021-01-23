@@ -48,10 +48,8 @@ trans_fun <- function(testate_data = "sq_tests",
   }
 
   csv <- paste0(mydir, "/", name, "_", tf, "_", country)
-  eu <- data("eu", envir = environment())
-  eu <- eurowood
+  data(eu, envir = environment())
   data("na", envir = environment())
-  na <- na_tf
   EuroTF <- if (tf == "eu") {
     eu
   } else{
