@@ -191,11 +191,8 @@ trans_fun <- function(testate_data = "sq_tests",
 
   # save
   if (save == T) {
-    write.csv(recon, file = paste0(csv, "_reconstruction.csv"))
+    write.csv(all_data, file = paste0(csv, "_reconstruction.csv"))
 
-    write.csv(error, file = paste0(csv, "_error.csv"))
-
-    write.csv(zscores, file = paste0(csv, "_z_scores.csv"))
 
     ggsave(
       filename = paste0(csv, "_z_plot.png"),
