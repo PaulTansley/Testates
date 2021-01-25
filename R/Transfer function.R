@@ -1,6 +1,6 @@
 #' @export
 
-trans_fun <- function(testate_data = "sq_tests",
+transfer <- function(testate_data = "sq_tests",
                       tf = "eu",
                       country = "england",
                       save = T,
