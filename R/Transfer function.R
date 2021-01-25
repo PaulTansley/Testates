@@ -89,7 +89,7 @@ trans_fun <- function(testate_data = "sq_tests",
 
 
   if (save == T) {
-    write.csv(model_stats, file = paste0(csv, "_performance.csv"))
+    write.csv(model_stats, file = paste0(csv, "_model_performance.csv"))
   }
 
   #Run model on data
