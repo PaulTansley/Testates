@@ -16,5 +16,5 @@ Imports:
     ggpubr,
     vegan,
     effectsize,
-    tidyverse
+    dplyr
 RoxygenNote: 7.1.1

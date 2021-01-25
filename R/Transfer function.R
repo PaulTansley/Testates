@@ -6,9 +6,10 @@ transfer <- function(testate_data = "sq_tests",
                       save = T,
                       age_file = F,
                       depth_start = 1,
-                      depth_int = 1) {
+                      depth_int = 1,
+                     boot_size = 1000) {
   require(rioja)
-  require(tidyverse)
+  require(dplyr)
   require(ggpubr)
   require(vegan)
   require(effectsize)
@@ -53,11 +54,12 @@ transfer <- function(testate_data = "sq_tests",
   csv <- paste0(mydir, "/", name, "_", tf, "_", countries)
   data(eu, envir = environment())
   data(na, envir = environment())
+  boot_size <- boot_size
 
   if (tf == "eu") {
-    EuroTF <<- eu
+    EuroTF <- eu
   } else{
-    EuroTF <<-  na
+    EuroTF <-  na
   }
 
 
@@ -99,7 +101,7 @@ transfer <- function(testate_data = "sq_tests",
     predict(EuroTF_model.cv,
             testate_data,
             sse = TRUE,
-            nboot = 1000)
+            nboot = boot_size)
 
   #Create data
   recon <- data.frame(EuroTF_recon$fit.boot) %>%
