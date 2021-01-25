@@ -1,6 +1,6 @@
 trans_fun <- function(testate_data = "sq_tests",
                       tf = "eu",
-                      country = "scotland",
+                      country = "england",
                       save = T,
                       age_file = F,
                       depth_start = 1,
@@ -10,11 +10,12 @@ trans_fun <- function(testate_data = "sq_tests",
   require(ggpubr)
   require(vegan)
   require(effectsize)
-  mydir <- paste0("tf_runs/")
-  if (!dir.exists(mydir))
-    dir.create(mydir)
   name <- testate_data
-  country <- country
+  mydir <- paste0("tf_runs/")
+  if (!dir.exists(mydir)){
+    dir.create(mydir)}
+   country <- country
+  countries <- paste0(country, collapse = "_")
   tf <- tf
   age_file <- age_file
   #read age file loop
@@ -47,7 +48,7 @@ trans_fun <- function(testate_data = "sq_tests",
     )
   }
 
-  csv <- paste0(mydir, "/", name, "_", tf, "_", country)
+  csv <- paste0(mydir, "/", name, "_", tf, "_", countries)
   data(eu, envir = environment())
   data(na, envir = environment())
 
@@ -71,7 +72,7 @@ trans_fun <- function(testate_data = "sq_tests",
   Spec <- EuroTF[, 9:55]
 
   #Remove sum 0 columns
-  Spec <-  Spec[, colSums(Spec != 0) > 0]
+  Spec <- Spec[, which(colSums(Spec) != 0)]
 
   #Extract WTD
   WT <- EuroTF$WTD
