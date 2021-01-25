@@ -49,9 +49,12 @@ trans_fun <- function(testate_data = "sq_tests",
 
   csv <- paste0(mydir, "/", name, "_", tf, "_", country)
   data(eu, envir = environment())
-  data("na", envir = environment())
-   if (tf == "eu") {EuroTF <- eu
-  } else{EuroTF <-  na
+  data(na, envir = environment())
+
+  if (tf == "eu") {
+    EuroTF <<- eu
+  } else{
+    EuroTF <<-  na
   }
 
 
@@ -65,10 +68,10 @@ trans_fun <- function(testate_data = "sq_tests",
   }
 
   #Extract species from tf file
-  Spec <- EuroTF[, 9:55]
+  Spec <<- EuroTF[, 9:55]
 
   #Remove sum 0 columns
-  Spec <-  Spec[, colSums(Spec != 0) > 0]
+  Spec <<-  Spec[, colSums(Spec != 0) > 0]
 
   #Extract WTD
   WT <- EuroTF$WTD
