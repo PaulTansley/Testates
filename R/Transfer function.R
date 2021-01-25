@@ -1,6 +1,6 @@
 trans_fun <- function(testate_data = "sq_tests",
                       tf = "eu",
-                      country = F,
+                      country = "scotland",
                       save = T,
                       age_file = F,
                       depth_start = 1,
@@ -50,10 +50,8 @@ trans_fun <- function(testate_data = "sq_tests",
   csv <- paste0(mydir, "/", name, "_", tf, "_", country)
   data(eu, envir = environment())
   data("na", envir = environment())
-  EuroTF <- if (tf == "eu") {
-    eu
-  } else{
-    na
+   if (tf == "eu") {EuroTF <- eu
+  } else{EuroTF <-  na
   }
 
 
@@ -181,7 +179,7 @@ trans_fun <- function(testate_data = "sq_tests",
       var_y = "WA.inv.tol",
       x = "depth(cm)",
       y = "z_score"
-    ) + ggtitle(paste0(name, " WTD Deviation"))
+    ) + ggtitle(paste0(name, " WTD zscores"))
 
   }
   print(recon_plot)
@@ -209,3 +207,4 @@ trans_fun <- function(testate_data = "sq_tests",
     )
   }
 }
+
