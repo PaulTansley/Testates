@@ -17,4 +17,5 @@ Imports:
     vegan,
     effectsize,
     dplyr
+    rlang
 RoxygenNote: 7.1.1
