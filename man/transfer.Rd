@@ -5,7 +5,7 @@
 \title{Create, apply and graph the results of a transfer function}
 \usage{
 transfer(
-  x = "lh1_tests",
+  testate_data = "lh1_tests",
   tf = "eu",
   country = "england",
   save = T,
@@ -16,11 +16,15 @@ transfer(
 )
 }
 \arguments{
-\item{x}{Name of your own data to apply the transfer function to}
-
 \item{tf}{The continent for which you want the transfer function data for (na or eu)}
 
-\item{country}{The country within the continental data you wish to choose}
+\item{country}{The country within the continental data you wish to choose. From the eu dataset these are:
+"denmark"     "england"     "estonia"     "faroeis."
+"finland"     "germany"     "ireland"     "n.ireland"
+"netherlands" "poland"      "russia"      "scotland"
+"sweden"      "switzerland" "turkey"
+From the na dataset these are :
+"canada" "usa"}
 
 \item{save}{Choose to save the output to disk}
 
@@ -31,6 +35,8 @@ transfer(
 \item{depth_int}{The interval in cm between depths of each sample}
 
 \item{boot_size}{The numbe of bootstrap cycles to run}
+
+\item{x}{Name of your own data to apply the transfer function to}
 }
 \value{
 Performance of the model, reconstruction, zscores and error, graphs of WTD and Zscores
@@ -39,5 +45,5 @@ Performance of the model, reconstruction, zscores and error, graphs of WTD and Z
 Create, apply and graph the results of a transfer function
 }
 \examples{
-transfer(x = "lh1_tests", tf = "eu", country = "england", save = T, age_file = "lh1_ages", depth_start = 1, depth_int = 1, boot_size = 1000)
+transfer(testate_Data = "lh1_tests", tf = "eu", country = "england", save = T, age_file = "lh1_ages", depth_start = 1, depth_int = 1, boot_size = 1000)
 }
