@@ -1,11 +1,25 @@
-roxygen2::roxygenise()
+#' @export
+#'
+#' @name transfer
+#' @title Create, apply and graph the results of a transfer function
+#'
+#' @param x Name of your own data to apply the transfer function to
+#' @param tf The continent for which you want the transfer function data for (na or eu)
+#' @param country The country within the continental data you wish to choose
+#' @param save Choose to save the output to disk
+#' @param age_file The name of the optional age file to graph the results with
+#' @param depth_start The first depth you sampled
+#' @param depth_int The interval in cm between depths of each sample
+#' @param boot_size The numbe of bootstrap cycles to run
+#' @return Performance of the model, reconstruction, zscores and error, graphs of WTD and Zscores
+#' @examples
+#' transfer(x = "lh1_tests", tf = "eu", country = "england", save = T, age_file = "lh1_ages", depth_start = 1, depth_int = 1, boot_size = 1000)
 
-
-transfer <- function(testate_data = "sq_tests",
+transfer <- function(x = "lh1_tests",
                       tf = "eu",
                       country = "england",
                       save = T,
-                      age_file = F,
+                      age_file = "lh1_ages",
                       depth_start = 1,
                       depth_int = 1,
                      boot_size = 1000) {
@@ -14,7 +28,7 @@ transfer <- function(testate_data = "sq_tests",
   require(ggpubr)
   require(vegan)
   require(effectsize)
-  name <- testate_data
+  name <- x
   mydir <- paste0("tf_runs/")
   if (!dir.exists(mydir)){
     dir.create(mydir)}
@@ -29,30 +43,30 @@ transfer <- function(testate_data = "sq_tests",
   else{
     age_file <- list.files(pattern = age_file)
   }
-  if (age_file == F) {
-    age_file
-  }
-  else if (".csv" %in% age_file) {
+
+  if (".csv" %in% age_file) {
     age_file <- read.csv(age_file)
   }
-  else {
+  else if (".txt" %in% age_file){
     age_file <- read.delim(age_file)
   }
+  else{age_file}
 
   # add depth to testates if it doesn't exists
-  testate_data <- read.csv(paste0(testate_data, ".csv"))
-  if ("depth" %in% colnames(testate_data)) {
-    depth <- testate_data$depth
+  x <- read.csv(paste0(x, ".csv"))
+  if ("depth" %in% colnames(x)) {
+    depth <- x$depth
   }
   else{
     depth <- seq(
       from = depth_start,
       by = depth_int,
-      length.out = nrow(testate_data)
+      length.out = nrow(x)
     )
   }
 
   csv <- paste0(mydir, "/", name, "_", tf, "_", countries)
+  csv_f <- paste0(mydir, "/", name, "_", tf)
   data(eu, envir = environment())
   data(na, envir = environment())
   boot_size <- boot_size
@@ -93,14 +107,10 @@ transfer <- function(testate_data = "sq_tests",
     as.data.frame(do.call(rbind, performance(EuroTF_model.cv)))
 
 
-  if (save == T) {
-    write.csv(model_stats, file = paste0(csv, "_model_performance.csv"))
-  }
-
   #Run model on data
   EuroTF_recon <-
     predict(EuroTF_model.cv,
-            testate_data,
+            x,
             sse = TRUE,
             nboot = boot_size)
 
@@ -195,9 +205,32 @@ transfer <- function(testate_data = "sq_tests",
   print(z_plot)
 
   # save
-  if (save == T) {
+  if (save == T & country == F) {
+
+    write.csv(all_data, file = paste0(csv_f, "_reconstruction.csv"))
+
+    write.csv(model_stats, file = paste0(csv_f, "_model_performance.csv"))
+
+    ggsave(
+      filename = paste0(csv_f, "_z_plot.png"),
+      plot = z_plot,
+      units = "cm",
+      height = 20,
+      width = 20
+    )
+
+    ggsave(
+      filename = paste0(csv_f, "_recon_plot.png"),
+      plot = recon_plot,
+      units = "cm",
+      height = 20,
+      width = 20
+    )
+  } else if (save == T){
+
     write.csv(all_data, file = paste0(csv, "_reconstruction.csv"))
 
+    write.csv(model_stats, file = paste0(csv, "_model_performance.csv"))
 
     ggsave(
       filename = paste0(csv, "_z_plot.png"),
@@ -212,8 +245,9 @@ transfer <- function(testate_data = "sq_tests",
       plot = recon_plot,
       units = "cm",
       height = 20,
-      width = 20
-    )
+      width = 20)
   }
 }
-transfer()
+
+
+
