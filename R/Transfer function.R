@@ -61,7 +61,7 @@ depth <- seq(
       from = depth_start,
       by = depth_int,
       length.out = nrow(age_file))
-if (!(depth %in% colnames(age_file))){agefile$depth <- depth}
+if (!(depth %in% colnames(age_file))){age_file$depth <- depth}
 
 depth <- seq(
   from = depth_start,
