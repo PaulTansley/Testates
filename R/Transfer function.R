@@ -60,7 +60,7 @@ transfer <- function(testate_data = "lh1_tests",
   depth <- seq(
       from = depth_start,
       by = depth_int,
-      length.out = nrow(testate_data)
+      length.out = nrow(testate_data))
 
 
   csv <- paste0(mydir, "/", name, "_", tf, "_", countries)
