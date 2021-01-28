@@ -61,8 +61,12 @@ depth <- seq(
       from = depth_start,
       by = depth_int,
       length.out = nrow(age_file))
-age_file$depth <- depth
+if (!(depth %in% colnames(age_file))){agefile$depth <- depth}
 
+depth <- seq(
+  from = depth_start,
+  by = depth_int,
+  length.out = nrow(testate_data))
 
   csv <- paste0(mydir, "/", name, "_", tf, "_", countries)
   csv_f <- paste0(mydir, "/", name, "_", tf)
