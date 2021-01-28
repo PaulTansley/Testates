@@ -1,4 +1,5 @@
-#' @export
+roxygen2::roxygenise()
+
 
 transfer <- function(testate_data = "sq_tests",
                       tf = "eu",
@@ -176,7 +177,7 @@ transfer <- function(testate_data = "sq_tests",
       recon,
       var_x = "mean",
       var_y = "WA.inv.tol",
-      x = "age(y/bp)",
+      x = "Age(y/bp)",
       y = "WTD (cm)"
     ) +
       ggtitle(paste0(name, " WTD Reconstruction"))
@@ -185,7 +186,7 @@ transfer <- function(testate_data = "sq_tests",
       zscores,
       var_x = "mean",
       var_y = "WA.inv.tol",
-      x = "depth(cm)",
+      x = "Age(y/bp)",
       y = "z_score"
     ) + ggtitle(paste0(name, " WTD zscores"))
 
