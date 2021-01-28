@@ -163,8 +163,9 @@ transfer <- function(testate_data = "lh1_tests",
       label.y = lab_y)
   }
 
-  all_data <<- rbind(recon, error, zscores)
+  all_data <- rbind(recon, error, zscores)
   all_data$site <- name
+  all_data <<- all_data
 
   if (age_file == F) {
     recon_plot <<- scat_plot(
