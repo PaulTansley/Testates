@@ -53,10 +53,10 @@ transfer <- function(testate_data = "lh1_tests",
   } else{
     age_file <- read.delim(age_file)
   }
-  # add depth to testates if it doesn't exists
-  if(".csv" %in% testate_data){testate_data <- read.csv(testate_data)}
+  # read data
+  if(any(".csv" == testate_data)){testate_data <- read.csv(testate_data)}
   else{testate_data <- read.csv(paste0(testate_data, ".csv"))}
-
+#add depth
   depth <- seq(
       from = depth_start,
       by = depth_int,
