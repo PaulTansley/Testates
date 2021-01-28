@@ -57,10 +57,11 @@ transfer <- function(testate_data = "lh1_tests",
   if(grepl(".csv", testate_data)){testate_data <- read.csv(testate_data)}
   else{testate_data <- read.csv(paste0(testate_data, ".csv"))}
 #add depth
-  depth <- seq(
+depth <- seq(
       from = depth_start,
       by = depth_int,
-      length.out = nrow(testate_data))
+      length.out = nrow(age_file))
+age_file$depth <- depth
 
 
   csv <- paste0(mydir, "/", name, "_", tf, "_", countries)
