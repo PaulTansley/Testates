@@ -9,7 +9,7 @@ transfer <- function(testate_data = "sq_tests",
                       depth_int = 1,
                      boot_size = 1000) {
   require(rioja)
-  require(tidyverse)
+  require(dplyr)
   require(ggpubr)
   require(vegan)
   require(effectsize)
