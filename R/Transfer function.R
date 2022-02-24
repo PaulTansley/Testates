@@ -22,12 +22,12 @@
 #' transfer(testate_Data = "lh1_tests", tf = "eu", country = "england", save = T, age_file = "lh1_ages", depth_start = 1, depth_int = 1, boot_size = 1000)
 
 transfer <- function(testate_data = "lh1_tests",
-                      tf = "eu",
-                      country = "england",
-                      save = T,
-                      age_file = "lh1_ages",
-                      depth_start = 1,
-                      depth_int = 1,
+                     tf = "eu",
+                     country = "england",
+                     save = T,
+                     age_file = "lh1_ages",
+                     depth_start = 1,
+                     depth_int = 1,
                      boot_size = 1000) {
   require(rioja)
   require(dplyr)
@@ -38,7 +38,7 @@ transfer <- function(testate_data = "lh1_tests",
   mydir <- paste0("tf_runs/")
   if (!dir.exists(mydir)){
     dir.create(mydir)}
-   country <- country
+  country <- country
   countries <- paste0(country, collapse = "_")
   tf <- tf
   age_file <- age_file
@@ -56,32 +56,32 @@ transfer <- function(testate_data = "lh1_tests",
   # read data
   if(grepl(".csv", testate_data)){testate_data <- read.csv(testate_data)}
   else{testate_data <- read.csv(paste0(testate_data, ".csv"))}
-#add depth
-if(!(age_file == F)) {depth <- seq(
-      from = depth_start,
-      by = depth_int,
-      length.out = nrow(age_file))
-age_file$depth <- depth}
-
-depth <- seq(
-  from = depth_start,
-  by = depth_int,
-  length.out = nrow(testate_data))
-
+  #add depth
+  if(!(age_file == F)) {depth <- seq(
+    from = depth_start,
+    by = depth_int,
+    length.out = nrow(age_file))
+  age_file$depth <- depth}
+  
+  depth <- seq(
+    from = depth_start,
+    by = depth_int,
+    length.out = nrow(testate_data))
+  
   csv <- paste0(mydir, "/", name, "_", tf, "_", countries)
   csv_f <- paste0(mydir, "/", name, "_", tf)
   data(eu, envir = environment())
   data(na, envir = environment())
   boot_size <- boot_size
-
+  
   if (tf == "eu") {
     EuroTF <- eu
   } else{
     EuroTF <-  na
   }
-
-
-
+  
+  
+  
   #To filter by country, change country from F and write countries wanted
   EuroTF <- if (country == F) {
     EuroTF
@@ -89,57 +89,57 @@ depth <- seq(
   else{
     filter(EuroTF, COUNTRY %in% c(country))
   }
-
+  
   #Extract species from tf file
   Spec <- EuroTF[, 9:55]
-
+  
   #Remove sum 0 columns
   Spec <- Spec[, which(colSums(Spec) != 0)]
-
+  
   #Extract WTD
   WT <- EuroTF$WTD
-
+  
   #Run Model
   EuroTF_model <- WA(Spec, WT, tolDW = T)
-
+  
   EuroTF_model.cv <- crossval(EuroTF_model, cv.method = "loo")
   #Check performance
   print(performance(EuroTF_model.cv))
-
+  
   model_stats <-
     as.data.frame(do.call(rbind, performance(EuroTF_model.cv)))
-
-
+  
+  
   #Run model on data
   EuroTF_recon <-
     predict(EuroTF_model.cv,
             testate_data,
             sse = TRUE,
             nboot = boot_size)
-
+  
   #Create data
   recon <<- data.frame(EuroTF_recon$fit.boot) %>%
     mutate(depth = depth,
            type = "reconstuction")
-
+  
   error <<- data.frame(EuroTF_recon$SEP.boot) %>%
     mutate(depth = depth,
            type = "error")
-
+  
   zscores <<- standardize(data.frame(EuroTF_recon$fit.boot)) %>%
     mutate(depth = depth,
            type = "zscores")
-
+  
   # if loop for age wtd plots
   if (!(age_file == F)) {
     recon <- left_join(recon, age_file)
-
+    
     error <- left_join(error, age_file)
-
+    
     zscores <- left_join(zscores, age_file)
   }
-
-
+  
+  
   # create age or depth plots
   scat_plot <- function(data, var_x, var_y, x, y) {
     lab_y <- max(data$WA.inv.tol)
@@ -164,11 +164,11 @@ depth <- seq(
       ),
       label.y = lab_y)
   }
-
+  
   all_data <- rbind(recon, error, zscores)
   all_data$site <- name
   all_data <<- all_data
-
+  
   if (age_file == F) {
     recon_plot <<- scat_plot(
       recon,
@@ -177,7 +177,7 @@ depth <- seq(
       x = "depth(cm)",
       y = "WTD (cm)"
     ) + ggtitle(paste0(name, " WTD Reconstruction"))
-
+    
     z_plot <<- scat_plot(
       zscores,
       var_x = "depth",
@@ -186,7 +186,7 @@ depth <- seq(
       y = "z_score"
     ) + ggtitle(paste0(name, " WTD Deviation"))
   }
-
+  
   else {
     recon_plot <<- scat_plot(
       recon,
@@ -196,7 +196,7 @@ depth <- seq(
       y = "WTD (cm)"
     ) +
       ggtitle(paste0(name, " WTD Reconstruction"))
-
+    
     z_plot <<- scat_plot(
       zscores,
       var_x = "mean",
@@ -204,18 +204,18 @@ depth <- seq(
       x = "Age(y/bp)",
       y = "z_score"
     ) + ggtitle(paste0(name, " WTD zscores"))
-
+    
   }
   print(recon_plot)
   print(z_plot)
-
+  
   # save
   if (save == T & country == F) {
-
+    
     write.csv(all_data, file = paste0(csv_f, "_reconstruction.csv"))
-
+    
     write.csv(model_stats, file = paste0(csv_f, "_model_performance.csv"))
-
+    
     ggsave(
       filename = paste0(csv_f, "_z_plot.png"),
       plot = z_plot,
@@ -223,7 +223,7 @@ depth <- seq(
       height = 20,
       width = 20
     )
-
+    
     ggsave(
       filename = paste0(csv_f, "_recon_plot.png"),
       plot = recon_plot,
@@ -232,11 +232,11 @@ depth <- seq(
       width = 20
     )
   } else if (save == T){
-
+    
     write.csv(all_data, file = paste0(csv, "_reconstruction.csv"))
-
+    
     write.csv(model_stats, file = paste0(csv, "_model_performance.csv"))
-
+    
     ggsave(
       filename = paste0(csv, "_z_plot.png"),
       plot = z_plot,
@@ -244,7 +244,7 @@ depth <- seq(
       height = 20,
       width = 20
     )
-
+    
     ggsave(
       filename = paste0(csv, "_recon_plot.png"),
       plot = recon_plot,
