@@ -216,9 +216,9 @@ transfer <- function(testate_data = "lh1_tests",
   # save
   if (save == T & country == F) {
     
-    write.csv(all_data, file = paste0(csv_f, "_reconstruction.csv"))
+    write_csv(all_data, file = paste0(csv_f, "_reconstruction.csv"))
     
-    write.csv(model_stats, file = paste0(csv_f, "_model_performance.csv"))
+    write_csv(model_stats, file = paste0(csv_f, "_model_performance.csv"))
     
     ggsave(
       filename = paste0(csv_f, "_z_plot.png"),
