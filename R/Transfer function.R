@@ -35,6 +35,7 @@ transfer <- function(testate_data = "lh1_tests",
   require(vegan)
   require(effectsize)
   name <- testate_data
+  site_nme <-  gsub("\\_.*", "", name)
   mydir <- paste0("tf_runs/")
   if (!dir.exists(mydir)){
     dir.create(mydir)}
@@ -111,7 +112,7 @@ transfer <- function(testate_data = "lh1_tests",
   
   model_stats <-
     as.data.frame(do.call(rbind, performance(EuroTF_model.cv)))
-  
+  model_stats$site <- site_nme 
   
   #Run model on data
   EuroTF_recon <-
