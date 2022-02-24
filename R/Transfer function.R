@@ -107,6 +107,7 @@ transfer <- function(testate_data = "lh1_tests",
   EuroTF_model <- WA(Spec, WT, tolDW = T)
   
   EuroTF_model.cv <- crossval(EuroTF_model, cv.method = "loo")
+  Sys.sleep(20)
   #Check performance
   print(performance(EuroTF_model.cv))
   
