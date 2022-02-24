@@ -38,6 +38,9 @@ transfer <- function(testate_data = "lh1_tests",
   mydir <- paste0("tf_runs/")
   if (!dir.exists(mydir)){
     dir.create(mydir)}
+  site_dir <- paste0(mydir, "/", gsub("\\_.*", "", name))
+  if (!dir.exists(site_dir)){
+    dir.create(site_dir)}
   country <- country
   countries <- paste0(country, collapse = "_")
   tf <- tf
