@@ -136,13 +136,12 @@ transfer <- function(testate_data = "lh1_tests",
            type = "zscores")
   
   # if loop for age wtd plots
-  if (!(age_file == F)) {
-    recon <- left_join(recon, age_file)
+      recon <- left_join(recon, age_file)
     
     error <- left_join(error, age_file)
     
     zscores <- left_join(zscores, age_file)
-  }
+  
   
   
   # create age or depth plots
