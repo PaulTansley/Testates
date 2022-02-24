@@ -71,8 +71,8 @@ transfer <- function(testate_data = "lh1_tests",
     by = depth_int,
     length.out = nrow(testate_data))
   
-  csv <- paste0(mydir, "/", name, "_", tf, "_", countries)
-  csv_f <- paste0(mydir, "/", name, "_", tf)
+  csv <- paste0(site_dir, "/", name, "_", tf, "_", countries)
+  csv_f <- paste0(site_dir, "/", name, "_", tf)
   data(eu, envir = environment())
   data(na, envir = environment())
   boot_size <- boot_size
