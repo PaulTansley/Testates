@@ -107,10 +107,10 @@ transfer <- function(testate_data = "lh1_tests",
   EuroTF_model <- WA(Spec, WT, tolDW = T)
   
   EuroTF_model.cv <- crossval(EuroTF_model, cv.method = "loo")
-  Sys.sleep(20)
+  
   #Check performance
   print(performance(EuroTF_model.cv))
-  
+  Sys.sleep(10)
   model_stats <-
     as.data.frame(do.call(rbind, performance(EuroTF_model.cv)))
   model_stats$site <- site_nme 
