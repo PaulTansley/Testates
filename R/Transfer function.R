@@ -110,7 +110,7 @@ transfer <- function(testate_data = "lh1_tests",
   
   #Check performance
   print(performance(EuroTF_model.cv))
-  Sys.sleep(10)
+
   model_stats <-
     as.data.frame(do.call(rbind, performance(EuroTF_model.cv)))
   model_stats$site <- site_nme 
